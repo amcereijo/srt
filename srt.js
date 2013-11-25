@@ -18,7 +18,8 @@ $(document).ready(function () {
 			text = $('#text').val();
 		if(account!='' && text!=''){
 			chrome.storage.local.set({account: account});
-			var newURL = "https://twitter.com/search?q="+text+"%20from%3A"+account+"&src=typd";
+			var includeRetweets = "%20include%3Aretweets";
+			var newURL = "https://twitter.com/search?q="+text+"%20from%3A"+account+includeRetweets+"&src=typd";
     		chrome.tabs.create({ url: newURL });
 		}
 	});
