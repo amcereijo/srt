@@ -1,0 +1,22 @@
+{
+	"extName":{
+		"message": "Buscar Tweets - SrT",
+  		"description": "Extension name"
+	},
+	"extDescription":{
+		"message": "Esta extensión buscar Tweets en una cuenta determinada y mostrar los resultados en una pestaña nueva.",
+  		"description": "Extension description"
+	},
+	"placeholderForAccount":{
+		"message": "Account",
+  		"description": "Account label text"
+	},
+	"placeholderForText":{
+		"message": "Text",
+  		"description": "Text label text"
+	},
+	"buttonSearch":{
+		"message": "Search",
+  		"description": "Search button text"
+	}
+}

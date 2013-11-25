@@ -1,0 +1,22 @@
+{
+	"extName":{
+		"message": "Search Tweets - SrT",
+  		"description": "Extension name"
+	},
+	"extDescription":{
+		"message": "This extension allows seach Tweets in a defined account and show the results in a new tab",
+  		"description": "Extension description"
+	},
+	"placeholderForAccount":{
+		"message": "Account",
+  		"description": "Account label text"
+	},
+	"placeholderForText":{
+		"message": "Text",
+  		"description": "Text label text"
+	},
+	"buttonSearch":{
+		"message": "Search",
+  		"description": "Search button text"
+	}
+}
