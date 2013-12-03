@@ -13,9 +13,12 @@
     "default_icon": "rtc.png",
     "default_popup": "srt.html"
   },
- 
    "permissions": [
+    "storage",
+    "alarms",
     "tabs",
-    "storage"
+    "http://*/*",
+    "https://*/*",
+    "webNavigation"
    ]
 }
