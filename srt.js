@@ -34,15 +34,22 @@ alert("eu");*/
 			
 	if(account!='' && text!=''){
 		chrome.storage.local.set({account: account});
-		alert('dentro3');
-		if(!jQuery.inArray( account, accountList )){
+		alert('dentro2:'+accountList);
+		//var array = new Array(accountList);
+		var array = accountList;
+		alert('dentro3:'+accountList+", - account:"+account+" IN array:"+jQuery.inArray( account, array ));
+		if(jQuery.inArray( account, array )<0){
 			alert('dentro4');
-			accountList.push(account);
-			alert('dentro5:'+accountList);
-			chrome.storage.local.set({accountList: accountList});
-			alert('dentro6');
+			array.push(account);
+			alert('dentro5:'+array);
+			chrome.storage.local.set({accountList: array});
+			alert('dentro6'+array);
+			chrome.storage.local.get('accountList', function(data) {
+		      		alert(data.accountList);
+		    });
+		    alert('dentro7:'+jQuery.inArray( account, array ));
 		}
-		alert(accountList);
+		alert(array);
 		var includeRetweets = "%20include%3Aretweets";
 		newURL = "https://twitter.com/search?q="+text+"%20from%3A"+account+includeRetweets+"&src=typd";
 		//chrome.tabs.create({ url: newURL });
