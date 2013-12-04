@@ -13,8 +13,7 @@ $(document).ready(function () {
 		},
 		search = function(){ //function to make a search
 			var accountVal = accountEl.val(),
-				textVal = textEl.val(),
-				newURL='a';
+				textVal = textEl.val();
 			
 			if(accountVal!=='' && textVal!==''){	
 				chrome.storage.local.set({account: accountVal});
@@ -22,7 +21,7 @@ $(document).ready(function () {
 					accountListShow.push(accountVal);
 					chrome.storage.local.set({accountList: accountListShow});
 				}
-				newURL = "https://twitter.com/search?q="+textVal+"%20from%3A"+accountVal+includeRetweets+"&src=typd";
+				var newURL = "https://twitter.com/search?q="+textVal+"%20from%3A"+accountVal+includeRetweets+"&src=typd";
 				chrome.tabs.create({ url: newURL });
 			}
 
