@@ -1,45 +1,59 @@
 $(document).ready(function () {
        
-var labelForAccount = chrome.i18n.getMessage("placeholderForAccount"),
+	var labelForAccount = chrome.i18n.getMessage("placeholderForAccount"),
 		labelForText = chrome.i18n.getMessage("placeholderForText"),
 		buttonSearch = chrome.i18n.getMessage("buttonSearch"),
+		includeRetweets = "%20include%3Aretweets",
 		accountListShow=[],
-		addElement = function ( elem ) {
+		accountEl = $('#account'),
+		textEl = $('#text'),
+		searchEl = $('#search'),
+		addElement = function ( elem ) { //function to add elements to a acoount array
 		    accountListShow.push(elem);
+		},
+		search = function(){ //function to make a search
+			var accountVal = accountEl.val(),
+				textVal = textEl.val(),
+				newURL='a';
+			
+			if(accountVal!=='' && textVal!==''){	
+				chrome.storage.local.set({account: accountVal});
+				if(jQuery.inArray( accountVal, accountListShow )<0){
+					accountListShow.push(accountVal);
+					chrome.storage.local.set({accountList: accountListShow});
+				}
+				newURL = "https://twitter.com/search?q="+textVal+"%20from%3A"+accountVal+includeRetweets+"&src=typd";
+				chrome.tabs.create({ url: newURL });
+			}
+
 		};
 
-	$('#account').attr('placeholder',labelForAccount);
-	$('#text').attr('placeholder',labelForText);
-	$('#search').val(buttonSearch);
+	//prepare plugin view
+	accountEl.attr('placeholder',labelForAccount);
+	textEl.attr('placeholder',labelForText);
+	searchEl.val(buttonSearch);
 
+	//prepare last account where search
 	chrome.storage.local.get('account', function(data) {
-      if (data.account) {  $('#account').val(data.account); }	
+      if (data.account) {  accountEl.val(data.account); }	
     });
-	chrome.storage.local.get('accountList', function(data) {
 
+	//load auto complete account list
+	chrome.storage.local.get('accountList', function(data) {
       	if (data.accountList){
       		data.accountList.forEach( addElement );
     	}
     });
-	
-	$( "#account" ).autocomplete({
+    //add auto complete account list
+	accountEl.autocomplete({
       source: accountListShow
     });
 
-	$('#search').click(function(){
-		var account = $('#account').val(),
-			text = $('#text').val(),newURL='a';
-		
-		if(account!='' && text!=''){
-			chrome.storage.local.set({account: account});
-			if(jQuery.inArray( account, accountListShow )<0){
-				accountListShow.push(account);
-				chrome.storage.local.set({accountList: accountListShow});
-			}
-			var includeRetweets = "%20include%3Aretweets";
-			newURL = "https://twitter.com/search?q="+text+"%20from%3A"+account+includeRetweets+"&src=typd";
-			chrome.tabs.create({ url: newURL });
-		}
-
-	}); 
+	//event to launch a search
+	searchEl.click(search);
+	accountEl.keyup(function(e){
+	    if(e.keyCode === 13){
+	        search();
+	    }
+	});
 });
